@@ -1,29 +1,15 @@
     <?php
-    $vornamearray = array("Max", "Mahid", "Andy", "Lukas", "Jonas", "Kristian", "Mathias", "Marius", "Klaus", "Haris");
+    // LOGIK
+    $vornamearray = array("Vorname" => "Max", "Nachname" => "Bertoldi");
+    $vornamearray[] = array("Vorname" => "Mahid", "Nachname" => "Hosain");
+        $vornamearray[] = array("Vorname" => "Andy", "Nachname" => "Steinacher"),
+"Vorname" => "Lukas", "Nachname" => "Schneider",
+    "Vorname" => "Jonas", "Nachname" => "Kompatscher",
+    "Vorname" => "Kristian", "Nachname" => "Tomasko",
+    "Vorname" => "Mathias", "Nachname" => "Schwimbacher",
+    "Vorname" => "Marius", "Nachname" => "Niederstäter",
+    "Vorname" => "Klaus", "Nachname" => "Leimgruber",
+    "Vorname" => "Haris", "Nachname" => "Rehman",);
+    // SICHT
+    require_once("./personenausgabe.tbl.php");
     ?>
-
-    <!DOCTYPE html>
-    <html lang="de">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Personen Ausgabe</title>
-    </head>
-
-    <body>
-        <table border="bold">
-            <tr>
-                <th>Personen</th>
-            </tr>
-            <?php foreach ($vornamearray as $key => $value) { ?>
-                <tr>
-                    <td>
-                        <?= $value; ?>
-                    </td>
-                </tr>
-            <?php } ?>
-        </table>
-    </body>
-
-    </html>
