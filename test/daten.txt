@@ -1,0 +1,1 @@
+a:2:{i:0;a:2:{s:8:"username";s:4:"olaf";s:8:"password";s:4:"olaf";}i:1;a:2:{s:8:"username";s:4:"hugo";s:8:"password";s:9:"hugo4life";}}
