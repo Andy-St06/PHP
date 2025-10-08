@@ -8,23 +8,22 @@
      * über POST aufgerufen, also das Formular nicht abgeschickt wurde, 
      * leite auf index.php um. 
      */
-    if ( (! ist_eingeloggt()) || (empty($_POST)) ) {
+    if ( (! ist_eingeloggt()) ) {
         header('Location: index.php');
         exit;
     }
-    
-    // Erstelle einen neuen Eintrag im Format der anderen Einträge
-    $eintrag = array(
+    $eintraege = hole_eintraege(true);
+    $i = $_GET['id'];
+
+    // Überschreibt den Eintrag an Stelle $i
+    $eintraege[$i] = array(
         'titel'       => trim($_POST['titel']),
         'inhalt'      => trim($_POST['inhalt']),
         'autor'       => $_SESSION['eingeloggt'],
         'erstellt_am' => time()
     );
-    
-    // hole die alten Einträge, hänge den neuen an und speichere
-    $eintraege   = hole_eintraege();
-    $eintraege[] = $eintrag;
-    file_put_contents(PFAD_EINTRAEGE, serialize($eintraege));
+
+    file_put_contents(PFAD_EINTRAEGE, serialize(array_reverse($eintraege)));
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -50,9 +49,9 @@
             
             <h3>Folgender Eintrag wurde erfolgreich gespeichert:</h3>
 			<div class="zitat">
-            	<h1><?php echo htmlspecialchars($eintrag['titel']); ?></h1>
+            	<h1><?php echo htmlspecialchars($eintraege[$i]['titel']); ?></h1>
                 <p>
-                    <?php echo nl2br(htmlspecialchars($eintrag['inhalt'])); ?>
+                    <?php echo nl2br(htmlspecialchars($eintraege[$i]['inhalt'])); ?>
                 </p>
                 <p>
 	                <a href="index.php" class="backlink">Zurück zur Hauptseite</a>

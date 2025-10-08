@@ -1,6 +1,7 @@
 <?php
 
-function hole_eintraege($umgedreht = false) {
+function hole_eintraege($umgedreht = false)
+{
     $eintraege = array();
     if (file_exists(PFAD_EINTRAEGE)) {
         $eintraege = unserialize(file_get_contents(PFAD_EINTRAEGE));
@@ -11,7 +12,8 @@ function hole_eintraege($umgedreht = false) {
     return $eintraege;
 }
 
-function ist_eingeloggt() {
+function ist_eingeloggt()
+{
     $erg = false;
     if (isset($_SESSION['eingeloggt'])) {
         if (!empty($_SESSION['eingeloggt']))
@@ -20,12 +22,23 @@ function ist_eingeloggt() {
     return $erg;
 }
 
-function logge_ein($benutzername) {
+function logge_ein($benutzername)
+{
     $_SESSION['eingeloggt'] = $benutzername;
 }
 
-function logge_aus() {
+function logge_aus()
+{
     unset($_SESSION['eingeloggt']);
 }
 
-?>
+function darf_tun($autor)
+{
+    $erg = false;
+    if (ist_eingeloggt()) { //checkt ob eingelogt ist
+        if ($autor == $_SESSION['eingeloggt']) { // checkt ob autor und eingelogter benutzer gleich ist
+            $erg = true;
+        }
+    }
+    return $erg;
+}
