@@ -31,13 +31,12 @@ $eintraege = hole_eintraege(true);
 
                 <p class="eintrag_unten">
                     <span>
-                        <?php $benutzer = $benutzer_daten[$e['autor']]; ?>
+                        <?php $benutzer = $benutzer_daten[$e['nickname']]; ?>
                         geschrieben von
                         <?php echo $benutzer['vorname']; ?>
                         <?php echo $benutzer['nachname']; ?>
-                        am <?php echo date('d.m.Y', $e['erstellt_am']); ?>
-                        um <?php echo date('H:i', $e['erstellt_am']); ?>
-                        <?php if (darf_tun($e['autor'])) { ?>
+                        am <?php echo $e['erstellt_am']; ?>
+                        <?php if (darf_tun($e['nickname'])) { ?>
                             <a href="loesche_eintrag.php?id=<?= $i ?>">X</a>
                             <a href="edit_eintrag.php?id=<?= $i ?>">E</a>
                         <?php } ?>
