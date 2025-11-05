@@ -35,7 +35,8 @@ $eintraege = hole_eintraege(true);
                         geschrieben von
                         <?php echo $benutzer['vorname']; ?>
                         <?php echo $benutzer['nachname']; ?>
-                        am <?php echo $e['erstellt_am']; ?>
+                        am <?=get_Date(strtotime($e['erstellt_am']))?>
+                        um <?=get_Time(strtotime($e['erstellt_am'])); ?>
                         <?php if (darf_tun($e['nickname'])) { ?>
                             <a href="loesche_eintrag.php?id=<?= $i ?>">X</a>
                             <a href="edit_eintrag.php?id=<?= $i ?>">E</a>
