@@ -4,6 +4,8 @@ function getConnection()
 {
     try {
         $db = new PDO('mysql:host=localhost;dbname=weblog', "root",);
+        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (Exception $e) {
         print $e->getMessage();
     }
@@ -30,18 +32,22 @@ function hole_eintraege($umgedreht = false)
     return $eintraege;
 }
 
-function login($user, $psw)
+/**
+ * true if login sucsesfull.
+ * false if login failed.
+ */
+function login($usr, $psw)
 {
+    $erg = false;
     $db = getConnection();
-    $sql = "SELECT passwort FROM autor WHERE nickname = '$user'";
-    $query = $db->query($sql);
-    $passwort = $query->fetch()["passwort"];
-    #var_dump($password);
-    if ($passwort == $psw) {
-        return true;
-    }else{
-        return false;
+    $sql = "SELECT * FROM autor WHERE nickname = '$usr' and passwort = '$psw'";
+    $result = $db->query($sql);
+    $user = $result->fetch();
+    #var_dump($user);
+    if ($user != false && $user["passwort"] == $psw) {
+        $erg = true;
     }
+    return $erg;
 }
 
 function ist_eingeloggt()
