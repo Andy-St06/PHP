@@ -12,19 +12,17 @@
         header('Location: index.php');
         exit;
     }
-    
+
+    $db = getConnection();
+    $titel = trim($_POST['titel']);
+    $inhalt = trim($_POST['inhalt']);
+    $user = $_SESSION['eingeloggt'];
+    $erstellt = time();
+    $userid = $user['id'];
     // Erstelle einen neuen Eintrag im Format der anderen Einträge
-    $eintrag = array(
-        'titel'       => trim($_POST['titel']),
-        'inhalt'      => trim($_POST['inhalt']),
-        'autor'       => $_SESSION['eingeloggt'],
-        'erstellt_am' => time()
-    );
     
-    // hole die alten Einträge, hänge den neuen an und speichere
-    $eintraege   = hole_eintraege();
-    $eintraege[] = $eintrag;
-    file_put_contents(PFAD_EINTRAEGE, serialize($eintraege));
+    $sql = "INSERT INTO eintrag (titel, inhalt, autor_id, erstellt_am) VALUES ('$titel', '$inhalt', '$userid' ,'$erstellt');";
+    $query = $db->query($sql);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

@@ -33,19 +33,19 @@ function hole_eintraege($umgedreht = false)
 }
 
 /**
- * true if login sucsesfull.
- * false if login failed.
+ * user if login sucsesfull.
+ * NULL if login failed.
  */
 function login($usr, $psw)
 {
-    $erg = false;
+    $erg = NULL;
     $db = getConnection();
     $sql = "SELECT * FROM autor WHERE nickname = '$usr' and passwort = '$psw'";
     $result = $db->query($sql);
     $user = $result->fetch();
     #var_dump($user);
     if ($user != false && $user["passwort"] == $psw) {
-        $erg = true;
+        $erg = $user;
     }
     return $erg;
 }
@@ -60,9 +60,9 @@ function ist_eingeloggt()
     return $erg;
 }
 
-function logge_ein($benutzername)
+function logge_ein($user)
 {
-    $_SESSION['eingeloggt'] = $benutzername;
+    $_SESSION['eingeloggt'] = $user;
 }
 
 function logge_aus()

@@ -10,17 +10,13 @@ if( ! ist_eingeloggt()){
     exit;
 }
 
-//holen der eintrage in absteigender Reihenfolge
-$eintraege = hole_eintraege(true);
 //Gewünschte id herholen
 $i = $_GET['id'];
 
 //löschen des Eintrages an Stelle $i
-unset($eintraege[$i]);
-
-//zurück speichern
-$eintraege = array_reverse($eintraege);
-file_put_contents(PFAD_EINTRAEGE, serialize($eintraege));
+$db = getConnection();
+$sql = "DELETE FROM eintrag WHERE id='$i'";
+$query = $db->query($sql);
 
 //um auf die Startseite zurückzukommen
 header("Location: index.php");

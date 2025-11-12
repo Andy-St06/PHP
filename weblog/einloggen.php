@@ -4,10 +4,10 @@ require_once 'includes/funktionen.inc.php';
 session_start();
 $user = trim($_POST['benutzername']);
 $psw = trim($_POST['passwort']);
-
-if (login($user, $psw)) {
+$erg = login($user, $psw);
+if ($erg != null) {
     // Wenn ja, logge den Benutzer ein
-    logge_ein($user);
+    logge_ein($erg);
 }
 
 
