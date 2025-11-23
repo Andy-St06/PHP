@@ -17,7 +17,7 @@
     $titel = trim($_POST['titel']);
     $inhalt = trim($_POST['inhalt']);
     $user = $_SESSION['eingeloggt'];
-    $erstellt = time();
+    $erstellt = date("Y-m-d H:i:s");
     $userid = $user['id'];
     // Erstelle einen neuen Eintrag im Format der anderen Einträge
     
@@ -48,9 +48,9 @@
             
             <h3>Folgender Eintrag wurde erfolgreich gespeichert:</h3>
 			<div class="zitat">
-            	<h1><?php echo htmlspecialchars($eintrag['titel']); ?></h1>
+            	<h1><?php echo htmlspecialchars($titel); ?></h1>
                 <p>
-                    <?php echo nl2br(htmlspecialchars($eintrag['inhalt'])); ?>
+                    <?php echo nl2br(htmlspecialchars($inhalt)); ?>
                 </p>
                 <p>
 	                <a href="index.php" class="backlink">Zurück zur Hauptseite</a>

@@ -74,7 +74,8 @@ function darf_tun($autor)
 {
     $erg = false;
     if (ist_eingeloggt()) { //checkt ob eingelogt ist
-        if ($autor == $_SESSION['eingeloggt']) { // checkt ob autor und eingelogter benutzer gleich ist
+        $name = $_SESSION['eingeloggt'];
+        if ($autor == $name['nickname']) { // checkt ob autor und eingelogter benutzer gleich ist
             $erg = true;
         }
     }

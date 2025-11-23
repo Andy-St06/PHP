@@ -1,6 +1,14 @@
+<?php
+require_once 'konfiguration.php';
+require_once 'funktionen.inc.php';
+$user = $_SESSION['eingeloggt'];
+$username = $user['nickname'];    
+?>
+
 <ul>
     <li><a href="index.php">Hauptseite</a></li>
     <li><a href="zeige_eintrag_formular.php">Neuer Eintrag</a></li>
     <li><a href="ausloggen.php">Ausloggen</a></li>
 </ul>
-<p>Eingeloggt als: <em><?php echo $_SESSION['eingeloggt']; ?></em></p>
+
+<p>Eingeloggt als: <em><?php echo $username; ?></em></p>
