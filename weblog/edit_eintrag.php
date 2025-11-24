@@ -5,19 +5,18 @@ require_once 'includes/funktionen.inc.php';
 require_once 'includes/konfiguration.php';
 
 //sicherheitscheck
-if( ! ist_eingeloggt()){
+if (! ist_eingeloggt()) {
     header("Location: index.php");
     exit;
 }
 
-//holen der eintrage in absteigender Reihenfolge
-$eintraege = hole_eintraege(true);
-//Gewünschte id herholen
 $i = $_GET['id'];
-//Titel und Inhalt herausholen
-$titel = $eintraege[$i]['titel'];
-$inhalt = $eintraege[$i]['inhalt'];
-
+$db = getConnection(); //Datenbank Verbindung herstellen, $db ist eine PDO Instanz
+$sql = "SELECT * FROM eintrag WHERE id = $i";
+$query = $db->query($sql); //Abfrage ausführen, Ergebnis ist von Typ PDOStatement
+$eintraege = $query->fetchAll();
+$inhalt = $eintraege[0]['inhalt'];
+$titel = $eintraege[0]['titel'];
 
 ?>
 <!DOCTYPE html>
@@ -31,33 +30,33 @@ $inhalt = $eintraege[$i]['inhalt'];
 </head>
 
 <body>
-    
+
     <div id="gesamt">
-    
+
         <div id="kopf">
             <h1>Mein Weblog</h1>
         </div>
-        
+
         <div id="inhalt">
-            
+
             <h1>Editieren Sie hier einen Eintrag:</h1>
-            
-            <form action="speichere_bestehenden_eintrag.php?id=<?=$i?>" method="post">
+
+            <form action="speichere_bestehenden_eintrag.php?id=<?= $i ?>" method="post">
                 <p><input type="text" name="titel" id="titel" value="<?= $titel ?>" /></p>
                 <p><textarea name="inhalt" id="eintrag" cols="50" rows="10"><?= $inhalt ?></textarea></p>
                 <p><input type="submit" value="Eintragen" /></p>
             </form>
-            
+
         </div>
-        
+
         <div id="menu">
             <?php require 'includes/hauptmenu.php'; ?>
         </div>
-        
+
         <div id="fuss">
             Das ist das Ende
         </div>
-            
+
     </div>
 
 </body>

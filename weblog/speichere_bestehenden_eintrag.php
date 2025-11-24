@@ -12,20 +12,25 @@ if ((! ist_eingeloggt())) {
     header('Location: index.php');
     exit;
 }
-$eintraege = hole_eintraege(true);
 $i = $_GET['id'];
+$titel = $_POST['titel'];
+$inhalt = $_POST['inhalt'];
 
-// Überschreibt den Eintrag an Stelle $i
-$eintraege[$i] = array(
-    'titel'       => trim($_POST['titel']),
-    'inhalt'      => trim($_POST['inhalt']),
-    'autor'       => $_SESSION['eingeloggt'],
-    'erstellt_am' => time()
-);
 
-$sql = "REPLACE INTO eintrag (id, titel, inhalt, autor_id, erstellt_am)
-VALUES ($i, '$titel', '$inhalt', '$autor', 'erstellt_am');";
-$query = $db->query($sql);
+$db = getConnection();
+
+$sql = "UPDATE eintrag
+        SET titel = :titel,
+            inhalt = :inhalt
+        WHERE id = :id";
+
+$stmt = $db->prepare($sql);
+
+$stmt->execute([
+    ':titel' => $titel,
+    ':inhalt' => $inhalt,
+    ':id' => $i
+]);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -50,9 +55,9 @@ $query = $db->query($sql);
 
             <h3>Folgender Eintrag wurde erfolgreich gespeichert:</h3>
             <div class="zitat">
-                <h1><?php echo htmlspecialchars($eintraege[$i]['titel']); ?></h1>
+                <h1><?php echo htmlspecialchars($titel); ?></h1>
                 <p>
-                    <?php echo nl2br(htmlspecialchars($eintraege[$i]['inhalt'])); ?>
+                    <?php echo nl2br(htmlspecialchars($inhalt)); ?>
                 </p>
                 <p>
                     <a href="index.php" class="backlink">Zurück zur Hauptseite</a>
