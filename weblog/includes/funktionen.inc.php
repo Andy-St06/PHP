@@ -96,3 +96,25 @@ function get_Date($timstamp)
 {
     return date("d.m.Y", $timstamp);
 }
+
+function registriren($vorname, $nachname, $benutzer, $psw)
+{
+    $erg = NULL;
+    $db = getConnection();
+    $psw = password_hash($psw, PASSWORD_DEFAULT);
+    $sqlCKECK = "SELECT * FROM autor WHERE nickname = '$benutzer'";
+    $query1 = $db->query($sqlCKECK);
+    $res1 = $query1->fetch();
+    if ($res1 == NULL) {
+        try {
+            $sqlINSERT = "INSERT INTO autor (vorname, nachname, nickname, passwort) VALUES ('$vorname', '$nachname', '$benutzer' ,'$psw');";
+            $query = $db->query($sqlINSERT);
+            $erg = true;
+        } catch (\Throwable $th) {
+        }
+    }else{
+        $erg = false;
+    }
+
+    return $erg;
+}
