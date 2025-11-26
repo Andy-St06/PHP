@@ -41,11 +41,16 @@ function login($usr, $psw)
     $erg = NULL;
     $db = getConnection();
     $sql = "SELECT * FROM autor WHERE nickname = '$usr' and passwort = '$psw'";
-    $result = $db->query($sql);
-    $user = $result->fetch();
-    #var_dump($user);
-    if ($user != false && $user["passwort"] == $psw) {
-        $erg = $user;
+    try {
+        $result = $db->query($sql);
+        $user = $result->fetch();
+        if ($user != false && $user["passwort"] == $psw) {
+            $erg = $user;
+        }
+    } catch (Exception $e) {
+        echo "login fehlgeschlagen \n";
+        var_dump($db->errorInfo());
+        echo $e->getMessage();
     }
     return $erg;
 }
