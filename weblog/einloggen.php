@@ -10,10 +10,4 @@ if ($erg != null) {
     logge_ein($erg);
 }
 
-
-/*
-     * Leite zu index.php um. Der Besucher wird entweder das Login-Formular
-     * sehen, wenn die Daten falsch waren, oder das Hauptmenu, wenn der Login
-     * erfolgreich war. 
-     */
 header('Location: index.php');

@@ -40,11 +40,11 @@ function login($usr, $psw)
 {
     $erg = NULL;
     $db = getConnection();
-    $sql = "SELECT * FROM autor WHERE nickname = '$usr' and passwort = '$psw'";
+    $sql = "SELECT * FROM autor WHERE nickname = '$usr'";
     try {
         $result = $db->query($sql);
         $user = $result->fetch();
-        if ($user != false && $user["passwort"] == $psw) {
+        if ($user != false && password_verify($psw, $user["passwort"])) {
             $erg = $user;
         }
     } catch (Exception $e) {

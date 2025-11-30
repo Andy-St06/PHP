@@ -3,6 +3,6 @@
     <p><input type="password" name="passwort" id="passwort" /></p>
     <p><input type="submit" value="Einloggen" class="button" /></p>
     <ul>
-    <li><a href="benutzer_anlegen.php">Benutzer Anlegen</a></li>
+        <li><a href="benutzer_anlegen.php">Benutzer Anlegen</a></li>
     </ul>
 </form>
