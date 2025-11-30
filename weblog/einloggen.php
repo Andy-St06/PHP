@@ -6,7 +6,6 @@ $user = trim($_POST['benutzername']);
 $psw = trim($_POST['passwort']);
 $erg = login($user, $psw);
 if ($erg != null) {
-    // Wenn ja, logge den Benutzer ein
     logge_ein($erg);
 }
 
