@@ -168,7 +168,6 @@ function benutzerandern($daten, $vorname, $nachname, $nickname, $psw)
                     ':vorname' => $vorname,
                     ':nachname' => $nachname,
                     ':nickname' => $nickname,
-                    ':passwort' => $psw,
                     ':id' => $id
                 ]);
                 $erg = "Änderungen erfolgreich gespeichert!";
