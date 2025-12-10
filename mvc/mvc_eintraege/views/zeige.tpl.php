@@ -9,5 +9,9 @@
 			<li>Nachname: <?= $eintrag['nachname']; ?></li>
 			<li>Email: <?= $eintrag['email']; ?></li>
 		</ul>
+		<ul>
+			<li><a href="index.php?aktion=editiere&id=<?=$_REQUEST['id']?>">EDIT</a></li>
+			<li><a href="index.php">HOME</a></li>
+		</ul>
 	</body>
 </html>
