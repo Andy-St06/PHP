@@ -9,4 +9,6 @@ $bozen = new Stadt("Bozen", '39012',5000,"Bozen");
 echo $bozen;
 unset($bozen);
 echo Stadt::getAnzahl();
+echo "<br>";
+echo $bruneck->getStadtProvinz();
 ?>

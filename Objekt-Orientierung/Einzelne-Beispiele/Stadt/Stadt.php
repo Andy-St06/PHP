@@ -34,13 +34,16 @@ class Stadt
             . self::$anzahl
             . "<br>";
     }
-
-
+    
 
     //GETTER
     function getName()
     {
         return $this->name;
+    }
+    
+    function getStadtProvinz(){
+        return $this->getName() . " (".$this->getProvinz().")";
     }
 
     function getPlz()
