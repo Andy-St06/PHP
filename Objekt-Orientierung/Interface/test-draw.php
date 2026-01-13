@@ -1,6 +1,8 @@
 <?php
 require_once("quadrat.php");
 require_once("rechteck.php");
+require_once("kreis.php");
+require_once("würfel.php");
 $quadrat = new Quadrat(10);
 echo "Umfang: ".$quadrat->berechneUmfang();
 echo "<br>";
@@ -10,4 +12,16 @@ $quadrat = new Rechteck(10,5);
 echo "Umfang: ".$quadrat->berechneUmfang();
 echo "<br>";
 echo "Fläche: ".$quadrat->berechneFlaeche();
+echo "<br>";
+$kreis = new Kreis(10);
+echo "Umfang: ".$kreis->berechneUmfang();
+echo "<br>";
+echo "Fläche: ".$kreis->berechneFlaeche();
+echo "<br>";
+$würfel = new Würfel(10);
+echo "Umfang: ".$würfel->berechneUmfang();
+echo "<br>";
+echo "Fläche: ".$würfel->berechneFlaeche();
+echo "<br>";
+echo "Fläche: ".$würfel->berechneVolumen();
 echo "<br>";
