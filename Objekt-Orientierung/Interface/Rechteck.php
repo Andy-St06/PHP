@@ -1,7 +1,7 @@
 <?php
-require_once('Form.php');
+require_once('Form2D.php');
 
-class Rechteck extends Form
+class Rechteck extends Form2D
 {
     private float $laenge = 0;
     private float $breite = 0; 

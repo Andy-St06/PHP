@@ -1,7 +1,7 @@
 <?php
-require_once('Form.php');
+require_once('Form2D.php');
 
-class Quadrat extends Form
+class Quadrat extends Form2D
 {
     private float $laenge = 0;
     public function __construct($laenge)

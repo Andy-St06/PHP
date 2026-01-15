@@ -1,7 +1,7 @@
 <?php
-require_once('Form.php');
+require_once('Form2D.php');
 
-class Kreis extends Form
+class Kreis extends Form2D
 {
 
     private float $radius = 0;

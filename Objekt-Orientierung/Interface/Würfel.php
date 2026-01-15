@@ -9,11 +9,6 @@ class Würfel extends From3D
         $this->setLaenge($laenge);
     }
 
-    public function berechneUmfang()
-    {
-        return $this->getLaenge() * 12;
-    }
-
     public function berechneFlaeche()
     {
         return $this->getLaenge() * $this->getLaenge() * 6;
@@ -21,7 +16,7 @@ class Würfel extends From3D
 
     public function berechneVolumen()
     {
-         return $this->getLaenge() * $this->getLaenge() * $this->getLaenge();
+        return $this->getLaenge() * $this->getLaenge() * $this->getLaenge();
     }
 
     public function getLaenge()

@@ -6,12 +6,13 @@ abstract class Form implements Drawable
 
     private int $x = 0;
     private int $y = 0;
+    
+    public abstract function berechneFlaeche();
 
     public function setX($x)
     {
         $this->x = $x;
     }
-
 
     public function setY($y)
     {
@@ -27,7 +28,4 @@ abstract class Form implements Drawable
     {
         return $this->y;
     }
-
-    public abstract function berechneUmfang();
-    public abstract function berechneFlaeche();
 }
