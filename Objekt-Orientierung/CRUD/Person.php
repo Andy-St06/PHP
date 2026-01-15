@@ -1,11 +1,18 @@
 <?php
+require_once('Addresse.php');
 
 class Person
 {
-    private $vorname = '';
-    private $nachname = '';
+    private String $vorname = "";
+    private String $nachname = "";
+    private ?Addresse $addresse = null;
 
     private static $dateiname = 'personen.txt';
+
+    public function __construct()
+    {
+        $this->addresse = new Addresse();
+    }
 
     public function setVorname($vorname)
     {
@@ -25,6 +32,66 @@ class Person
     public function getNachname()
     {
         return $this->nachname;
+    }
+
+    public function setPlz($plz)
+    {
+        $this->addresse->setPlz($plz);
+    }
+
+    public function setOrt($ort)
+    {
+        $this->addresse->setOrt($ort);
+    }
+
+    public function setStraße($straße)
+    {
+        $this->addresse->setStraße($straße);
+    }
+
+    public function setStraßenummer($straßenummer)
+    {
+        $this->addresse->setStraßenummer($straßenummer);
+    }
+
+    public function setLand($land)
+    {
+        $this->addresse->setLand($land);
+    }
+
+    public function setAddresse($addresse)
+    {
+        $this->addresse = $addresse;
+    }
+
+    public function getLand()
+    {
+        return $this->addresse->getLand();
+    }
+
+    public function getStraßenummer()
+    {
+        return $this->addresse->getStraßenummer();
+    }
+
+    public function getPlz()
+    {
+        return $this->addresse->getPlz();
+    }
+
+    public function getOrt()
+    {
+        return $this->addresse->getOrt();
+    }
+
+    public function getStraße()
+    {
+        return $this->addresse->getStraße();
+    }
+
+    public function getAddresse()
+    {
+        return $this->addresse;
     }
 
     public function speichere()
@@ -62,6 +129,6 @@ class Person
 
     public function __toString()
     {
-        return $this->getVorname() . " " . $this->getNachname();
+        return $this->getVorname() . " " . $this->getNachname()." ".$this->getAddresse();
     }
 }
