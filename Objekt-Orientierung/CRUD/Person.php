@@ -129,6 +129,6 @@ class Person
 
     public function __toString()
     {
-        return $this->getVorname() . " " . $this->getNachname()." ".$this->getAddresse();
+        return $this->getVorname() . " " . $this->getNachname() . " " . $this->getAddresse();
     }
 }
