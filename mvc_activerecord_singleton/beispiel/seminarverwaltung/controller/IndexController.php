@@ -31,7 +31,7 @@ class IndexController extends AbstractBase
   {
     // übergebene Teilnehmer ID auslesen und Bemnutzerobjekt erstellen
     $benutzer = Benutzer::finde($_GET["id"]);
-    #$seminartermin = Seminartermin::finde()$_GET["id2"];
+    $seminartermin = Seminartermin::finde($_GET["id2"]);
     $this->addContext("seminartermine", Seminartermin::findeNachBenutzer($benutzer));
     $this->setTemplate("zeigeTeilnehmerAktion");
   }
