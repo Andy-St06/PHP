@@ -102,7 +102,7 @@ class Seminartermin {
 
     public function loescheTeilnehmer(Benutzer $teilnehmer) {
         $sql = 'DELETE FROM nimmt_teil '
-                . 'WHERE benutzer_id=? AND seminartermin_id=?';
+                . 'WHERE benutzer_id=? AND seminartermine_id=?';
         $abfrage = DB::getDB()->prepare($sql);
         $abfrage->execute(array(
             $teilnehmer->getId(),

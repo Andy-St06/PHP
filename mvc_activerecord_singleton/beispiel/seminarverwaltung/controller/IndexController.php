@@ -27,12 +27,13 @@ class IndexController extends AbstractBase
     $this->setTemplate("alleSTAktion");
   }
 
-  public function entferneBenutzerAusSeminar()
+  public function entferneBenutzerAusSeminarAktion()
   {
     // übergebene Teilnehmer ID auslesen und Bemnutzerobjekt erstellen
     $benutzer = Benutzer::finde($_GET["id"]);
-    $seminartermin = Seminartermin::finde($_GET["id2"]);
-    $this->addContext("seminartermine", Seminartermin::findeNachBenutzer($benutzer));
-    $this->setTemplate("zeigeTeilnehmerAktion");
+    $st = Seminartermin::finde($_GET["id2"]);
+    $st->loescheTeilnehmer($benutzer);
+    $this->addContext("seminartermine", Seminartermin::findeNachBenutzer($benutzer));    
+    $this->setTemplate("alleSTAktion");
   }
 }
