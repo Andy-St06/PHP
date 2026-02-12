@@ -7,6 +7,7 @@ class IndexController extends AbstractBase
   public function alleSTAktion()
   {
     $this->addContext("seminartermine", Seminartermin::findeAlle());
+    $this->addContext("allbenutzer", Benutzer::findeAlle());
   }
 
   // Seminarterminteilnehmer
@@ -33,7 +34,29 @@ class IndexController extends AbstractBase
     $benutzer = Benutzer::finde($_GET["id"]);
     $st = Seminartermin::finde($_GET["id2"]);
     $st->loescheTeilnehmer($benutzer);
-    $this->addContext("seminartermine", Seminartermin::findeNachBenutzer($benutzer));    
+    $this->addContext("seminartermine", Seminartermin::findeNachBenutzer($benutzer));
+    #header("Location: index.php?aktion=zeigeTeilnehmer");
     $this->setTemplate("alleSTAktion");
+  }
+
+  public function alleBenutzerAktion()
+  {
+    $this->addContext("allbenutzer", Benutzer::findeAlle());
+  }
+
+  public function neuerBenutzerAktion() {}
+
+  public function anlegenAktion()
+  {
+    $name = $_POST["name"];
+    $nachname = $_POST["nachname"];
+    $email = $_POST["email"];
+    $passwort = $_POST["passwort"];
+    $anrede = $_POST["anrede"];
+    $erstellt = date("j-m-d");
+    $benutzer = new Benutzer($_POST);
+    $benutzer->speichere();
+    $this->addContext("allbenutzer", Benutzer::findeAlle());
+    $this->setTemplate("alleBenutzerAktion");
   }
 }
