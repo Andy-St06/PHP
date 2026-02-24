@@ -48,12 +48,12 @@ class IndexController extends AbstractBase
 
   public function anlegenAktion()
   {
-    $name = $_POST["name"];
-    $nachname = $_POST["nachname"];
-    $email = $_POST["email"];
-    $passwort = $_POST["passwort"];
-    $anrede = $_POST["anrede"];
-    $erstellt = date("j-m-d");
+    #$name = $_POST["name"];
+    #$nachname = $_POST["nachname"];
+    #$email = $_POST["email"];
+    #$passwort = $_POST["passwort"];
+    #$anrede = $_POST["anrede"];
+    #$erstellt = date("j-m-d");
     $benutzer = new Benutzer($_POST);
     $benutzer->speichere();
     $this->addContext("allbenutzer", Benutzer::findeAlle());

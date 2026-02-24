@@ -21,10 +21,10 @@ trait Persistable
         $schluessel = array_keys($attribute);
 
         // anonyme Funktion inline
-        $platzhalter = array_map(function($wert) {
+        $platzhalter = array_map(function ($wert) {
             return ':' . $wert;
         }, $schluessel);
-        
+
         $daten = [
             self::ermittleTable(),
             // titel, preis
@@ -34,7 +34,7 @@ trait Persistable
         ];
 
         $sql = vsprintf(
-            'INSERT INTO `%s` (`%s`) VALUES (`%s`)',
+            'INSERT INTO `%s` (%s) VALUES (%s)',
             $daten
         );
         $abfrage = DB::getDB()->prepare($sql);
@@ -50,7 +50,7 @@ trait Persistable
         $schluessel = array_keys($attribute);
 
         // anonyme Funktion inline
-        $platzhalter = array_map(function($wert) {
+        $platzhalter = array_map(function ($wert) {
             return $wert . ' = :' . $wert;
         }, $schluessel);
 
@@ -59,7 +59,7 @@ trait Persistable
             // titel = :titel, preis = :preis
             implode(', ', $platzhalter)
         ];
-        
+
         $sql = vsprintf(
             'UPDATE `%s` SET `%s` WHERE id = :id',
             $daten
@@ -68,4 +68,3 @@ trait Persistable
         $abfrage->execute($this->toArray());
     }
 }
-
