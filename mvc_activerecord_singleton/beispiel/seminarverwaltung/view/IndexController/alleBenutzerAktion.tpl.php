@@ -21,7 +21,8 @@
                 <td><?= $person->getName() ?></td>
                 <td><?= $person->getEmail() ?></td>
                 <td><?= $person->getPasswort() ?></td>
-                <td><a href="index.php?">edit</a></td>
+                <td><a href="index.php?aktion=edit&id=<?= $person->getId() ?>">edit</a></td>
+                <td><a href="index.php?aktion=loeschen&id=<?= $person->getId() ?>">edit</a></td>
             </tr>
         <?php } ?>
     </table>

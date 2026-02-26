@@ -47,6 +47,10 @@ class Benutzer {
         $this->email = $email;
     }
 
+    public function setRegistriert_seit($registriert_seit) {
+        $this->registriert_seit = $registriert_seit;
+    }
+
     public function getPasswort() {
         return $this->passwort;
     }
@@ -55,7 +59,7 @@ class Benutzer {
         $this->passwort = $passwort;
     }
 
-    public function getRegistriertSeit() {
+    public function getRegistriert_seit() {
         return $this->registriert_seit;
     }
 

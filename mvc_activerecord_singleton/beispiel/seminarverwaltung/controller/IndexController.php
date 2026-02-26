@@ -44,19 +44,42 @@ class IndexController extends AbstractBase
     $this->addContext("allbenutzer", Benutzer::findeAlle());
   }
 
-  public function neuerBenutzerAktion() {}
+  public function loeschenAktion() {}
 
-  public function anlegenAktion()
+  public function neuerBenutzerAktion()
   {
-    #$name = $_POST["name"];
-    #$nachname = $_POST["nachname"];
-    #$email = $_POST["email"];
-    #$passwort = $_POST["passwort"];
-    #$anrede = $_POST["anrede"];
-    #$erstellt = date("j-m-d");
-    $benutzer = new Benutzer($_POST);
-    $benutzer->speichere();
-    $this->addContext("allbenutzer", Benutzer::findeAlle());
-    $this->setTemplate("alleBenutzerAktion");
+    $anrede = "";
+    $vorname = "";
+    $name = "";
+    $email = "";
+    $fehler = "";
+    if ($_POST) {
+      if (isset($_POST['anrede']) && isset($_POST['vorname']) && isset($_POST['name']) && isset($_POST['email'])) {
+        $benutzer = new Benutzer($_POST);
+        $benutzer->setRegistriert_seit(date('y-m-d'));
+        try {
+          $benutzer->speichere();
+          $this->addContext("allbenutzer", Benutzer::findeAlle());
+          redirect("index.php?aktion=alleBenutzer");
+        } catch (PDOException $ex) {
+          if ($ex->getCode() === '23000') {
+            $anrede = $_POST['anrede'];
+            $vorname = $_POST['vorname'];
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $fehler = "Email-Adresse beriets vorhanden";
+          } else {
+            redirect("index.php?aktion=alleBenutzer");
+          }
+        }
+      }
+    }
+    $this->addContext("anrede", $anrede);
+    $this->addContext("vorname", $vorname);
+    $this->addContext("name", $name);
+    $this->addContext("email", $email);
+    $this->addContext("fehler", $fehler);
   }
+
+  public function editAktion() {}
 }
