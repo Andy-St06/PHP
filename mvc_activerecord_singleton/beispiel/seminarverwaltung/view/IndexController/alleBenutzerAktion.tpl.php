@@ -22,7 +22,7 @@
                 <td><?= $person->getEmail() ?></td>
                 <td><?= $person->getPasswort() ?></td>
                 <td><a href="index.php?aktion=edit&id=<?= $person->getId() ?>">edit</a></td>
-                <td><a href="index.php?aktion=loeschen&id=<?= $person->getId() ?>">edit</a></td>
+                <td><a href="index.php?aktion=loeschen&id=<?= $person->getId() ?>">löschen</a></td>
             </tr>
         <?php } ?>
     </table>

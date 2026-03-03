@@ -46,6 +46,7 @@ class IndexController extends AbstractBase
 
   public function loeschenAktion() {}
 
+
   public function neuerBenutzerAktion()
   {
     $anrede = "";
@@ -81,5 +82,40 @@ class IndexController extends AbstractBase
     $this->addContext("fehler", $fehler);
   }
 
-  public function editAktion() {}
+  public function editAktion()
+  {
+    if ($id = $_GET["id"] != null) {
+      $benutzer = Benutzer::finde($id);
+      if (!$benutzer) {
+        $this->render404();
+      }
+    }
+    $benutzer = Benutzer::finde($id);
+    $vorname = $benutzer->getVorname();
+    $name = $benutzer->getName();
+    $email = $benutzer->getEmail();
+    $passwort = $benutzer->getPasswort();
+    $anrede = $benutzer->getAnrede();
+    if ($_POST) {
+      $name = $_POST["name"];
+      $benutzer->setName($name);
+      $email = $_POST["email"];
+      $benutzer->setEmail($email);
+      $anrede = $_POST["anrede"];
+      $benutzer->setAnrede($anrede);
+      $benutzer = $_POST["vorname"];
+      $benutzer->setVorname($vorname);
+      if (!empty($_POST["passwort"])) {
+        $passwort = $_POST["passwort"];
+        $benutzer->setPasswort($passwort);
+      }
+      $benutzer->speichere();
+      redirect('index.php?aktion=alleBenutzer');
+    }
+    $this->addContext("id", $id);
+    $this->addContext("vorname", $vorname);
+    $this->addContext("name", $name);
+    $this->addContext("email", $email);
+    $this->addContext("anrede", $anrede);
+  }
 }
