@@ -41,11 +41,24 @@ class Lehrer
         $this->nachname = $nachname;
     }
 
-    public function getKlassen() {
-        
+    public function getKlassen()
+    {
+        return Klasse::findeNachLehrer($this);
     }
 
     /*     * ** Persistenz-Methoden *** */
+    public static function findeNachKlasse(Klasse $klasse)
+    {
+        $sql = 'SELECT lehrer.* FROM unterrichtet
+            JOIN lehrer ON lehrer.id = unterrichtet.lehrer_id
+            JOIN klasse ON klasse.id = unterrichtet.klasse_id
+            WHERE klasse.id = ?';
+        $abfrage = DB::getDB()->prepare($sql);
+        $abfrage->execute(array($klasse->getId()));
+        $abfrage->setFetchMode(PDO::FETCH_CLASS, 'Lehrer');
+        return $abfrage->fetchAll();
+    }
+
     /*
     public static function findeNachVorname($vorname) {
         $sql = 'SELECT * FROM benutzer WHERE vorname=?';
