@@ -1,5 +1,7 @@
 <?php
 
+use bz\berufsschule\uebung\Klasse as UebungKlasse;
+
 class Klasse
 {
     use ActiveRecordable, Deletable, Findable, Persistable;
@@ -52,6 +54,11 @@ class Klasse
     public function getLehrer(): array
     {
         return Lehrer::findeNachKlassen($this);
+    }
+
+    public function getSchueler(): array
+    {
+        return Schueler::findeNach("klasse_id", $this->getId());
     }
 
     /*     * **** Statische Methoden ***** */

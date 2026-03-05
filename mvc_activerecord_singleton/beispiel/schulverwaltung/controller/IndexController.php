@@ -2,7 +2,29 @@
 
 class IndexController extends AbstractBase
 {
+  public function alleKlassenAktion()
+  {
+    $this->addContext("allklasse", Klasse::findeAlle());
+  }
 
+  public function schuelerAktion()
+  {
+    $klasse = Klasse::finde($_GET["id"]);
+    $this->addContext("schuelerinklasse", $klasse->getSchueler());
+  }
+
+  public function lehrerAktion()
+  {
+    $klasse = Klasse::finde($_GET["id"]);
+    $this->addContext("lehrerinklasse", $klasse->getLehrer());
+  }
+
+
+
+
+
+
+  /*
   // Alle Seminartermine auslesen 
   public function alleSTAktion()
   {
@@ -82,4 +104,5 @@ class IndexController extends AbstractBase
   }
 
   public function editAktion() {}
+  */
 }
