@@ -33,17 +33,39 @@ class Klasse
         $this->name = $name;
     }
 
-    public function getRaum()
+    public function getRaum():Raum
     {
         return Raum::finde($this->raum_id);
     }
 
-    public function getKlassenlehrer()
+    public function setRaum_Id($raum_id)
+    {
+        $raum = $this->getRaum();
+        $raum->setId($raum_id);
+    }
+
+    public function getKlassenlehrer():Lehrer
     {
         return Lehrer::finde($this->klassenlehrer);
     }
 
+    public function getLehrer(){
+        
+    }
+
     /*     * **** Statische Methoden ***** */
+    public static function findeNachSeminartermin(Seminartermin $seminartermin) {
+        $sql = 'SELECT benutzer.* FROM benutzer '
+                . 'JOIN nimmt_teil ON benutzer.id=nimmt_teil.benutzer_id '
+                . 'WHERE nimmt_teil.seminartermine_id=?';
+        $abfrage = DB::getDB()->prepare($sql);
+        $abfrage->execute(array($seminartermin->getId()));
+        $abfrage->setFetchMode(PDO::FETCH_CLASS, 'Benutzer');
+        return $abfrage->fetchAll();
+    }
+
+
+
     /*
     public static function findeNachTitel($titel) {
         $sql = 'SELECT * FROM seminare WHERE titel=?';

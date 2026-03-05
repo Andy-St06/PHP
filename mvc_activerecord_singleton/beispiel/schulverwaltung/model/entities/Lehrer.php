@@ -41,7 +41,9 @@ class Lehrer
         $this->nachname = $nachname;
     }
 
-
+    public function getKlassen() {
+        
+    }
 
     /*     * ** Persistenz-Methoden *** */
     /*

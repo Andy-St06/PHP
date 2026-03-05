@@ -52,7 +52,7 @@ class Schueler
         return $this->gebutsdatum;
     }
 
-     public function getKlasse()
+    public function getKlasse(): Klasse
     {
         return Klasse::finde($this->klasse_id);
     }

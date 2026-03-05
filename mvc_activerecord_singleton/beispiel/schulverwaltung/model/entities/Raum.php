@@ -30,6 +30,10 @@ class Raum
         $this->bezeichnung = $bezeichnung;
     }
 
+    public function setId($id){
+        $this->id = $id;
+    }
+
 
 
     /*     * ** Persistenz-Methoden *** */
