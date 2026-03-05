@@ -19,6 +19,10 @@ class IndexController extends AbstractBase
     $this->addContext("lehrerinklasse", $klasse->getLehrer());
   }
 
+  public function schuelerHinzufuegenAtion(){
+    $klasse = Klasse::finde($_GET["id"]);
+    
+  }
 
 
 

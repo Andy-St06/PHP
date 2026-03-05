@@ -73,4 +73,8 @@ class Klasse
         $abfrage->setFetchMode(PDO::FETCH_CLASS, 'Klasse');
         return $abfrage->fetchAll();
     }
+
+    public static function schuelerHinzufuegen(){
+        
+    }
 }
