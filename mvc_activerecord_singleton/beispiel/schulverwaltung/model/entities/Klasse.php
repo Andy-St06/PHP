@@ -6,8 +6,8 @@ class Klasse
 
     private int $id = 0;
     private string $name = '';
-    private string $raum_id = 0;
-    private string $klassenlehrer = 0;
+    private int $raum_id = 0;
+    private int $klassenlehrer = 0;
 
     protected static $table = 'klasse';
 
@@ -38,7 +38,7 @@ class Klasse
         return Raum::finde($this->raum_id);
     }
 
-    public function setRaum_Id($raum_id)
+    public function setRaum_id($raum_id)
     {
         $raum = $this->getRaum();
         $raum->setId($raum_id);
@@ -49,15 +49,15 @@ class Klasse
         return Lehrer::finde($this->klassenlehrer);
     }
 
-    public function getLehrer()
+    public function getLehrer(): array
     {
-        return Lehrer::findeNachKlasse($this);
+        return Lehrer::findeNachKlassen($this);
     }
 
     /*     * **** Statische Methoden ***** */
     public static function findeNachLehrer(Lehrer $lehrer)
     {
-        $sql = 'SELECT lehrer.* FROM unterrichtet
+        $sql = 'SELECT klasse.* FROM unterrichtet
             JOIN lehrer ON lehrer.id = unterrichtet.lehrer_id
             JOIN klasse ON klasse.id = unterrichtet.klasse_id
             WHERE lehrer.id = ?';
@@ -66,29 +66,4 @@ class Klasse
         $abfrage->setFetchMode(PDO::FETCH_CLASS, 'Klasse');
         return $abfrage->fetchAll();
     }
-
-
-
-    /*
-    public static function findeNachTitel($titel) {
-        $sql = 'SELECT * FROM seminare WHERE titel=?';
-        $abfrage = DB::getDB()->prepare($sql);
-        $abfrage->execute(array($titel));
-        $abfrage->setFetchMode(PDO::FETCH_CLASS, 'Seminar');
-        return $abfrage->fetchAll();
-    }
-
-    public static function findeNachPreis($vonPreis, $bisPreis) {
-        $sql = 'SELECT * FROM seminare WHERE preis>=? AND preis<=?';
-        $abfrage = DB::getDB()->prepare($sql);
-        $abfrage->execute(array($vonPreis, $bisPreis));
-        $abfrage->setFetchMode(PDO::FETCH_CLASS, 'Seminar');
-        return $abfrage->fetchAll();
-    }
-
-    public function getSeminartermine() {
-        return Seminartermin::findeNachSeminar($this);
-    }
-    
-    */
 }
