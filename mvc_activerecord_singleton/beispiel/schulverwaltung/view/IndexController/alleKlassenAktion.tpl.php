@@ -12,7 +12,7 @@
             <th>Klasse</th>
             <th>Schüler</th>
             <th>Lehrer</th>
-            <th>Schüler Hinzufügen</th>
+            <th>Hinzufügen</th>
         </tr>
         <?php foreach ($allklasse as $klasse) { ?>
             <tr>

@@ -61,6 +61,24 @@ class Klasse
         return Schueler::findeNach("klasse_id", $this->getId());
     }
 
+    public function addSchueler(Schueler $schueler)
+    {
+        if ($schueler->getId() === 0) {
+            $schueler->speichere();
+        }
+        $schueler->setKlasse($this);
+        $schueler->speichere();
+    }
+
+    public function removeSchueler(Schueler $schueler)
+    {
+        if ($schueler->getId() === 0) {
+            return;
+        }
+        $schueler->setKlasse_id(0);
+        $schueler->speichere();
+    }
+
     /*     * **** Statische Methoden ***** */
     public static function findeNachLehrer(Lehrer $lehrer)
     {
@@ -72,9 +90,5 @@ class Klasse
         $abfrage->execute(array($lehrer->getId()));
         $abfrage->setFetchMode(PDO::FETCH_CLASS, 'Klasse');
         return $abfrage->fetchAll();
-    }
-
-    public static function schuelerHinzufuegen(){
-        
     }
 }

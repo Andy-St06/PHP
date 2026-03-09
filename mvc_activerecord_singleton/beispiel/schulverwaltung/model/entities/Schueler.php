@@ -57,7 +57,15 @@ class Schueler
         return Klasse::finde($this->klasse_id);
     }
 
-    public function setKlasse(){}
+    public function setKlasse(Klasse $klasse)
+    {
+        $this->klasse_id = $klasse->getId();
+    }
+
+    public function setKlasse_id(int $id)
+    {
+        $this->klasse_id = $id;
+    }
 
 
     /*     * ** Statische-Methoden *** */

@@ -12,12 +12,14 @@
             <th>Vorname</th>
             <th>Nachname</th>
             <th>Geburtsdatum</th>
+            <th>Entfernen</th>
         </tr>
         <?php foreach ($schuelerinklasse as $schueler) { ?>
             <tr>
                 <td><?= $schueler->getVorname() ?></td>
                 <td><?= $schueler->getNachname() ?></td>
                 <td><?= $schueler->getGebutsdatum() ?></td>
+                <td><a href="index.php?aktion=schuelerEntfernen&id=<?= $schueler->getId() ?>&id2=<?= $_GET['id'] ?>">&times;</a></td>
             </tr>
         <?php } ?>
     </table>

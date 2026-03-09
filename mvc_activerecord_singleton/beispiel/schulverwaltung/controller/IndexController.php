@@ -19,9 +19,56 @@ class IndexController extends AbstractBase
     $this->addContext("lehrerinklasse", $klasse->getLehrer());
   }
 
-  public function schuelerHinzufuegenAtion(){
+  // Führt das Formular zum Hinzufügen eines Schülers aus und verarbeitet es
+  public function schuelerHinzufuegenAktion()
+  {
     $klasse = Klasse::finde($_GET["id"]);
-    
+    $vorname = '';
+    $nachname = '';
+    $geburtsdatum = '';
+    $fehler = '';
+
+    if ($_POST) {
+      if (isset($_POST['vorname'], $_POST['nachname'], $_POST['geburtsdatum'])) {
+        $vorname = trim($_POST['vorname']);
+        $nachname = trim($_POST['nachname']);
+        $geburtsdatum = trim($_POST['geburtsdatum']);
+
+        if ($vorname === '' || $nachname === '' || $geburtsdatum === '') {
+          $fehler = 'Bitte alle Felder ausfüllen.';
+        } else {
+          $sch = new Schueler();
+          $sch->setVorname($vorname);
+          $sch->setNachname($nachname);
+          $sch->setGebutsdatum($geburtsdatum);
+          $sch->setKlasse($klasse);
+          try {
+            $sch->speichere();
+            redirect('index.php?aktion=schueler&id=' . $klasse->getId());
+            return;
+          } catch (PDOException $ex) {
+            $fehler = 'Beim Speichern ist ein Fehler aufgetreten.';
+          }
+        }
+      }
+    }
+
+    $this->addContext('klasse', $klasse);
+    $this->addContext('vorname', $vorname);
+    $this->addContext('nachname', $nachname);
+    $this->addContext('geburtsdatum', $geburtsdatum);
+    $this->addContext('fehler', $fehler);
+  }
+
+  public function schuelerEntfernenAktion()
+  {
+    $schueler = Schueler::finde($_GET['id']);
+    $klasseId = $_GET['id2'] ?? null;
+    if ($schueler && $klasseId) {
+      $schueler->setKlasse_id(0);
+      $schueler->speichere();
+      redirect('index.php?aktion=schueler&id=' . $klasseId);
+    }
   }
 
 
