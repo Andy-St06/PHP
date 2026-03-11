@@ -19,7 +19,6 @@ class IndexController extends AbstractBase
     $this->addContext("lehrerinklasse", $klasse->getLehrer());
   }
 
-  // Führt das Formular zum Hinzufügen eines Schülers aus und verarbeitet es
   public function schuelerHinzufuegenAktion()
   {
     $klasse = Klasse::finde($_GET["id"]);
