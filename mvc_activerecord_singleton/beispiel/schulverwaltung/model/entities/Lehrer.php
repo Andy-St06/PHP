@@ -46,6 +46,10 @@ class Lehrer
         return Klasse::findeNachLehrer($this);
     }
 
+     public function setLehrer(Klasse $klasse) {
+        $klasse->addLehrer($this);
+    }
+
     /*     * ** Statische-Methoden *** */
     public static function findeNachKlassen(Klasse $klasse)
     {
@@ -57,5 +61,17 @@ class Lehrer
         $abfrage->execute(array($klasse->getId()));
         $abfrage->setFetchMode(PDO::FETCH_CLASS, 'Lehrer');
         return $abfrage->fetchAll();
+    }
+
+    public function addKlasse(Klasse $klasse)
+    {
+        if ($klasse->getId() === 0) {
+            $klasse->speichere();
+        }
+
+        $sql = 'INSERT INTO unterrichtet '
+            . '(klasse_id, lehrer_id) VALUES (?, ?)';
+        $abfrage = DB::getDB()->prepare($sql);
+        $abfrage->execute(array($klasse->getId(), $this->getId()));
     }
 }

@@ -2,11 +2,25 @@
 
 class IndexController extends AbstractBase
 {
+  //alle Anzeigen Funktionen
   public function alleKlassenAktion()
   {
     $this->addContext("allklasse", Klasse::findeAlle());
   }
+  public function alleRaumAktion()
+  {
+    $this->addContext("allraum", Raum::findeAlle());
+  }
+  public function alleLehrerAktion()
+  {
+    $this->addContext("alllehrer", Lehrer::findeAlle());
+  }
+  public function alleSchuelerAktion()
+  {
+    $this->addContext("allschueler", Schueler::findeAlle());
+  }
 
+  //Speziele Funktionnen
   public function schuelerAktion()
   {
     $klasse = Klasse::finde($_GET["id"]);
@@ -19,6 +33,31 @@ class IndexController extends AbstractBase
     $this->addContext("lehrerinklasse", $klasse->getLehrer());
   }
 
+  public function schuelerEntfernenAktion()
+  {
+    $schueler = Schueler::finde($_GET['id']);
+    $klasseId = $_GET['id2'] ?? null;
+    if ($schueler && $klasseId) {
+      $schueler->setKlasse_id(0);
+      $schueler->speichere();
+      redirect('index.php?aktion=schueler&id=' . $klasseId);
+    }
+  }
+
+
+  //Hinzufügen Zu
+  public function lehrerZuKlasseHinzufuegenAktion()
+  {
+    $klasse = Klasse::finde($_GET["id"]);
+    if($_POST){
+      $lehrer = $_POST['lehrer'];
+      $klasse->addLehrer($lehrer);
+    }
+    $this->addContext('klasse', $klasse);
+    $this->addContext('alllehrer', Lehrer::findeAlle());
+  }
+
+  //NEW
   public function schuelerHinzufuegenAktion()
   {
     $klasse = Klasse::finde($_GET["id"]);
@@ -59,18 +98,96 @@ class IndexController extends AbstractBase
     $this->addContext('fehler', $fehler);
   }
 
-  public function schuelerEntfernenAktion()
+  public function raumHinzufuegenAktion()
   {
-    $schueler = Schueler::finde($_GET['id']);
-    $klasseId = $_GET['id2'] ?? null;
-    if ($schueler && $klasseId) {
-      $schueler->setKlasse_id(0);
-      $schueler->speichere();
-      redirect('index.php?aktion=schueler&id=' . $klasseId);
+    $bezeichnung = '';
+    $fehler = '';
+    if ($_POST) {
+      if (isset($_POST['bezeichnung'])) {
+        $bezeichnung = trim($_POST['bezeichnung']);
+        if ($bezeichnung === '') {
+          $fehler = 'Bitte alle Felder ausfüllen.';
+        } else {
+          $raum = new Raum();
+          $raum->setBezeichnung($bezeichnung);
+          try {
+            $raum->speichere();
+            redirect('index.php?aktion=alleRaum');
+            return;
+          } catch (PDOException $ex) {
+            $fehler = 'Beim Speichern ist ein Fehler aufgetreten.';
+          }
+        }
+      }
     }
+    $this->addContext('bezeichnung', $bezeichnung);
+    $this->addContext('fehler', $fehler);
   }
 
+  public function klasseHinzufuegenAktion()
+  {
+    $allraum = Raum::findeAlle();
+    $alllehrer = Lehrer::findeAlle();
+    $name = '';
+    $fehler = '';
 
+    if ($_POST) {
+      if (isset($_POST['name'], $_POST['raum_id'], $_POST['klassenlehrer'])) {
+        $name = trim($_POST['name']);
+        $raum = $_POST['raum_id'];
+        $lehrer = $_POST['klassenlehrer'];
+        if ($name === '' || $raum === '' || $lehrer === '') {
+          $fehler = 'Bitte alle Felder ausfüllen.';
+        } else {
+          $klasse = new Klasse($_POST);
+          try {
+            $klasse->speichere();
+            redirect('index.php?aktion=alleKlassen');
+            return;
+          } catch (PDOException $ex) {
+            $fehler = 'Beim Speichern ist ein Fehler aufgetreten.';
+          }
+        }
+      }
+    }
+
+    $this->addContext('allraum', $allraum);
+    $this->addContext('alllehrer', $alllehrer);
+    $this->addContext('name', $name);
+    $this->addContext('fehler', $fehler);
+  }
+
+  public function lehrerHinzufuegenAktion()
+  {
+    $vorname = '';
+    $nachname = '';
+    $fehler = '';
+
+    if ($_POST) {
+      if (isset($_POST['vorname'], $_POST['nachname'])) {
+        $vorname = trim($_POST['vorname']);
+        $nachname = trim($_POST['nachname']);
+
+        if ($vorname === '' || $nachname === '') {
+          $fehler = 'Bitte alle Felder ausfüllen.';
+        } else {
+          $lehrer = new Lehrer();
+          $lehrer->setVorname($vorname);
+          $lehrer->setNachname($nachname);
+          try {
+            $lehrer->speichere();
+            redirect('index.php?aktion=alleLehrer');
+            return;
+          } catch (PDOException $ex) {
+            $fehler = 'Beim Speichern ist ein Fehler aufgetreten.';
+          }
+        }
+      }
+    }
+    $this->addContext('vorname', $vorname);
+    $this->addContext('nachname', $nachname);
+    $this->addContext('fehler', $fehler);
+  }
 
 
 

@@ -69,5 +69,4 @@ class Schueler
 
 
     /*     * ** Statische-Methoden *** */
-  
 }

@@ -1,7 +1,5 @@
 <?php
 
-use bz\berufsschule\uebung\Klasse as UebungKlasse;
-
 class Klasse
 {
     use ActiveRecordable, Deletable, Findable, Persistable;
@@ -42,11 +40,15 @@ class Klasse
 
     public function setRaum_id($raum_id)
     {
-        $raum = $this->getRaum();
-        $raum->setId($raum_id);
+        $this->raum_id = (int)$raum_id;
     }
 
-    public function getKlassenlehrer(): Lehrer
+    public function setKlassenlehrer($klassenlehrer)
+    {
+        $this->klassenlehrer = $klassenlehrer;
+    }
+
+    public function getKlassenlehrer(): int
     {
         return Lehrer::finde($this->klassenlehrer);
     }
@@ -54,6 +56,10 @@ class Klasse
     public function getLehrer(): array
     {
         return Lehrer::findeNachKlassen($this);
+    }
+
+    public function setLehrer(Lehrer $lehrer) {
+        $lehrer->addKlasse($this);
     }
 
     public function getSchueler(): array
@@ -77,6 +83,18 @@ class Klasse
         }
         $schueler->setKlasse_id(0);
         $schueler->speichere();
+    }
+
+    public function addLehrer(Lehrer $lehrer)
+    {
+        if ($lehrer->getId() === 0) {
+            $lehrer->speichere();
+        }
+
+        $sql = 'INSERT INTO unterrichtet '
+            . '(lehrer_id, klasse_id) VALUES (?, ?)';
+        $abfrage = DB::getDB()->prepare($sql);
+        $abfrage->execute(array($lehrer->getId(), $this->getId()));
     }
 
     /*     * **** Statische Methoden ***** */
