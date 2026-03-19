@@ -25,5 +25,4 @@
     </table>
     <a href="index.php?aktion=alleKlassen">Klassen</a>
 </body>
-
 </html>

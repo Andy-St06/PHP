@@ -7,6 +7,7 @@
 </head>
 
 <body>
+    <h1><?= $klasse->getName() ?></h1>
     <table>
         <tr>
             <th>Vorname</th>

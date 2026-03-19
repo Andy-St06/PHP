@@ -13,6 +13,7 @@
         <a href="index.php?aktion=alleLehrer">Lehrer</a><br>
         <a href="index.php?aktion=alleSchueler">Schueler</a>
     </nav>
+    <h1>Alle Räume</h1>
     <table>
         <tr>
             <th>ID</th>

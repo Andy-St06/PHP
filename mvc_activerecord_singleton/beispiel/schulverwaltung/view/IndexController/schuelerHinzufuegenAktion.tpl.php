@@ -8,31 +8,21 @@
 
 <body>
     <h1>Schüler zur Klasse hinzufügen</h1>
-
-    <?php if (!empty($fehler)) : ?>
-        <p><?= $fehler ?></p>
-    <?php endif; ?>
-
+    <h3><?=  $klasse->getName() ?></h3>
+    <p><?= $fehler ?></p>
     <form method="post" action="">
         <label>
-            Vorname:<br>
-            <input type="text" name="vorname" value="<?= $vorname ?>">
+            Schüler:<br>
+            <select type="text" name="schuelerid">
+                <?php foreach ($allschueler as $schueler) { ?>
+                    <option value="<?= $schueler->getId() ?>"><?= $schueler->getVorname() ?> <?= $schueler->getNachname() ?></option>
+                <?php } ?>
+            </select>
         </label>
-        <br>
-        <label>
-            Nachname:<br>
-            <input type="text" name="nachname" value="<?= $nachname ?>">
-        </label>
-        <br>
-        <label>
-            Geburtsdatum:<br>
-            <input type="date" name="geburtsdatum" value="<?= $geburtsdatum ?>">
-        </label>
+        <input type="hidden" name="klasseid" value="<?= $klasse->getId() ?>">
         <br><br>
         <button type="submit">Speichern</button>
     </form>
-
-    <a href="index.php?aktion=schueler&id=<?= $klasse->getId() ?>">zurück</a>
+    <a href="index.php?aktion=alleKlassen">zurück</a>
 </body>
-
 </html>

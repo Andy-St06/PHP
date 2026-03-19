@@ -13,6 +13,7 @@
         <a href="index.php?aktion=alleLehrer">Lehrer</a><br>
         <a href="index.php?aktion=alleSchueler">Schueler</a>
     </nav>
+    <h1>Alle Schüler</h1>
     <table>
         <tr>
             <th>ID</th>
@@ -25,13 +26,12 @@
                 <td><?= $schueler->getVorname() ?></td>
                 <td><?= $schueler->getNachname() ?></td>
                 <td><?= $schueler->getGebutsdatum() ?></td>
-                <!--TODO-->
-                <td><a href=""><?= $schueler->getKlasse() ?></a></td>
+                <td><a href="index.php?aktion=alleKlassen"><?= $schueler->getKlasse() ?></a></td>
             </tr>
         <?php } ?>
     </table>
     <nav>
-        <a href="index.php?aktion=lehrerHinzufuegen">Neuen Lehrer hinzufügen</a>
+        <a href="index.php?aktion=newSchueler">Neuen Schüler hinzufügen</a>
     </nav>
 </body>
 

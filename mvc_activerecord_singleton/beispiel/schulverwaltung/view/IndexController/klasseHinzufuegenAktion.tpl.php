@@ -9,9 +9,7 @@
 <body>
     <h1>Neue Klasse erstellen</h1>
 
-    <?php if (!empty($fehler)) : ?>
-        <p><?= $fehler ?></p>
-    <?php endif; ?>
+    <p><?= $fehler ?></p>
 
     <form method="post" action="">
         <label>
@@ -24,7 +22,7 @@
             <select id="raum_id" name="raum_id">
                 <?php foreach ($allraum as $raum) { ?>
                     <option value="<?= $raum->getId() ?>"><?= $raum->getBezeichnung() ?></option>
-                    <?php } ?>
+                <?php } ?>
             </select>
         </label>
         <br>
@@ -33,7 +31,7 @@
             <select id="klassenlehrer" name="klassenlehrer">
                 <?php foreach ($alllehrer as $lehrer) { ?>
                     <option value="<?= $lehrer->getId() ?>"><?= $lehrer->getNachname() ?> <?= $lehrer->getVorname() ?></option>
-                    <?php } ?>
+                <?php } ?>
             </select>
         </label>
         <br><br>

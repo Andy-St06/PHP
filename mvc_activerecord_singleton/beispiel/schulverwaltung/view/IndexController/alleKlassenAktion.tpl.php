@@ -13,10 +13,11 @@
         <a href="index.php?aktion=alleLehrer">Lehrer</a><br>
         <a href="index.php?aktion=alleSchueler">Schueler</a>
     </nav>
+    <h1>Alle Klassen</h1>
     <table>
         <tr>
             <th>Klasse</th>
-            <th>Schüler</th>            
+            <th>Schüler</th>
             <th>Hinzufügen</th>
             <th>Lehrer</th>
             <th>Hinzufügen</th>

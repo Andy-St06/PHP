@@ -30,6 +30,7 @@ class IndexController extends AbstractBase
   public function lehrerAktion()
   {
     $klasse = Klasse::finde($_GET["id"]);
+    $this->addContext('klasse', $klasse);
     $this->addContext("lehrerinklasse", $klasse->getLehrer());
   }
 
@@ -48,19 +49,26 @@ class IndexController extends AbstractBase
   //Hinzufügen Zu
   public function lehrerZuKlasseHinzufuegenAktion()
   {
-    $klasse = Klasse::finde($_GET["id"]);
-    if($_POST){
-      $lehrer = $_POST['lehrer'];
-      $klasse->addLehrer($lehrer);
+    $klasseid = $_GET['id'];
+    $fehler = '';
+    if ($_POST) {
+      $lehrer = Lehrer::finde($_POST["lehrer"]);
+      $klasse = Klasse::finde($_POST["klasseid"]);
+      try {
+        $klasse->addLehrer($lehrer);
+        redirect('index.php?aktion=lehrer&id=' . $klasse->getId());
+      } catch (PDOException $e) {
+        $fehler = "Lehrer wurde schon hizugefügt";
+      }
     }
-    $this->addContext('klasse', $klasse);
+    $this->addContext('fehler', $fehler);
+    $this->addContext('klasseid', $klasseid);
     $this->addContext('alllehrer', Lehrer::findeAlle());
   }
 
-  //NEW
-  public function schuelerHinzufuegenAktion()
+  public function newSchuelerAktion()
   {
-    $klasse = Klasse::finde($_GET["id"]);
+    $klassen = Klasse::findeAlle();
     $vorname = '';
     $nachname = '';
     $geburtsdatum = '';
@@ -71,30 +79,52 @@ class IndexController extends AbstractBase
         $vorname = trim($_POST['vorname']);
         $nachname = trim($_POST['nachname']);
         $geburtsdatum = trim($_POST['geburtsdatum']);
-
         if ($vorname === '' || $nachname === '' || $geburtsdatum === '') {
           $fehler = 'Bitte alle Felder ausfüllen.';
         } else {
-          $sch = new Schueler();
-          $sch->setVorname($vorname);
-          $sch->setNachname($nachname);
-          $sch->setGebutsdatum($geburtsdatum);
-          $sch->setKlasse($klasse);
+          $schueler = new Schueler();
+          $schueler->setVorname($vorname);
+          $schueler->setNachname($nachname);
+          $schueler->setGebutsdatum($geburtsdatum);
           try {
-            $sch->speichere();
-            redirect('index.php?aktion=schueler&id=' . $klasse->getId());
-            return;
+            $schueler->speichere();
+            redirect('index.php?aktion=alleSchueler');
           } catch (PDOException $ex) {
-            $fehler = 'Beim Speichern ist ein Fehler aufgetreten.';
+            $fehler = $ex->getMessage();
           }
         }
       }
     }
-
-    $this->addContext('klasse', $klasse);
+    $this->addContext('allKlasse', $klassen);
     $this->addContext('vorname', $vorname);
     $this->addContext('nachname', $nachname);
     $this->addContext('geburtsdatum', $geburtsdatum);
+    $this->addContext('fehler', $fehler);
+  }
+
+  //NEW
+  public function schuelerHinzufuegenAktion()
+  {
+    $schueler1 = Schueler::findeAlle();
+    $klasse1 = Klasse::finde($_GET['id']);
+    $fehler = '';
+    if ($_POST) {
+      $schueler = Schueler::finde($_POST['schuelerid']);
+      $klasse = Klasse::finde($_POST['klasseid']);
+      try {
+        $schueler->setKlasse($klasse);
+        $schueler->speichere();
+        redirect('index.php?aktion=alleKlassen');
+        $this->addContext('klasse', $klasse);
+      } catch (PDOException $ex) {
+        $fehler = $ex->getMessage();
+        $this->addContext('klasse', $klasse);
+        $this->addContext('allschueler', $schueler);
+        $this->addContext('fehler', $fehler);
+      }
+    }
+    $this->addContext('klasse', $klasse1);
+    $this->addContext('allschueler', $schueler1);
     $this->addContext('fehler', $fehler);
   }
 
@@ -140,6 +170,7 @@ class IndexController extends AbstractBase
           $fehler = 'Bitte alle Felder ausfüllen.';
         } else {
           $klasse = new Klasse($_POST);
+          $klasse->addLehrer($lehrer);
           try {
             $klasse->speichere();
             redirect('index.php?aktion=alleKlassen');

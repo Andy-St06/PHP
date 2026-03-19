@@ -8,11 +8,8 @@
 
 <body>
     <h1>Lehrer zu Klasse hinzufügen</h1>
-
-    <?php if (!empty($fehler)) : ?>
-        <p><?= $fehler ?></p>
-    <?php endif; ?>
-    <form method="post" action="">
+    <p><?= $fehler ?></p>
+    <form method="POST" action="">
         <label>
             Lehrer:<br>
             <select type="text" name="lehrer">
@@ -21,10 +18,10 @@
                 <?php } ?>
             </select>
         </label>
+        <input name="klasseid" type="hidden" value="<?= $klasseid ?>">
         <br><br>
         <button type="submit">Speichern</button>
     </form>
-
     <a href="index.php?aktion=alleKlassen">zurück</a>
 </body>
 

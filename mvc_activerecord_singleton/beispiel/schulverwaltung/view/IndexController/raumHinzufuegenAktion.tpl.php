@@ -8,11 +8,7 @@
 
 <body>
     <h1>Raum hinzufügen</h1>
-
-    <?php if (!empty($fehler)) : ?>
-        <p><?= $fehler ?></p>
-    <?php endif; ?>
-
+    <p><?= $fehler ?></p>
     <form method="post" action="">
         <label>
             Bezeichnung:<br>
@@ -21,7 +17,6 @@
         <br><br>
         <button type="submit">Speichern</button>
     </form>
-
     <a href="index.php?aktion=alleRaum">zurück</a>
 </body>
 
