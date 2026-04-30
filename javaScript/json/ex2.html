@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form Submission with Fetch API</title>
+  </head>
+  <body>
+    <h1>Submit Your Information</h1>
+    <form id="user-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required /><br /><br />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required /><br /><br />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="response-message"></div>
+
+    <script>
+      document
+        .getElementById("user-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(this);
+          const formObject = {};
+          formData.forEach((value, key) => {
+            formObject[key] = value;
+          });
+
+          fetch("https://example.com/api/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formObject),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              document.getElementById("response-message").innerText =
+                "Form submitted successfully!";
+            })
+            .catch((error) => {
+              document.getElementById("response-message").innerText =
+                "Error submitting form: " + error.message;
+            });
+        });
+    </script>
+  </body>
+</html>

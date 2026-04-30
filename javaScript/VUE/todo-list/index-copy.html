@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"
+    />
+  </head>
+  <body style="display: flex; justify-content: center; align-items: center;">
+    <div id="app">
+      <div class="container"></div>
+      <h1>Todo List</h1>
+      <h3 id="count-data">{{ todoCount }}</h3>
+      <div v-if="!isEditing">
+        <input type="text" v-model="todo" />
+        <input type="submit" value="add" @click="storeTodo" />
+      </div>
+      <div v-else>
+        <input type="text" v-model="todo" />
+        <input type="submit" value="update" @click="updateTodo" />
+      </div>
+      <ol>
+        <li v-for="(todo, index) in todos">
+          {{ todo.text }}
+          <div v-if="todo.active">
+            <button @click="editTodo(index, todo)">Edit</button>
+            <button @click="deleteTodo(index)">Delete</button>
+            <button @click="completeTodo(todo)">Check</button>
+          </div>
+          <div v-else>
+            <button @click="editTodo(index, todo)">Edit</button>
+            <button @click="deleteTodo(index)">Delete</button>
+            <button @click="completeTodo(todo)">Uncheck</button>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          isEditing: false,
+          selectedIndex: null,
+          todo: "",
+          todos: [
+            {
+              text: "JavaScript lernen",
+              active: false,
+            },
+            {
+              text: "Essen kochen",
+              active: false,
+            },
+            {
+              text: "Essen gehen",
+              active: true,
+            },
+
+          ],
+        },
+        computed: {
+          todoCount() {
+            let activeCount = this.todos.filter((t) => !t.active).length;
+            let totalCount = this.todos.length;
+            return activeCount + "/" + totalCount;
+          },
+        },
+        methods: {
+          storeTodo() {
+            this.todos.push({
+              text: this.todo,
+              active: true,
+            });
+            this.todo = "";
+          },
+          editTodo(index, todo) {
+            this.isEditing = true;
+            this.selectedIndex = index;
+            this.todo = todo.text;
+          },
+          updateTodo() {
+            this.todos.splice(this.selectedIndex, 1, {
+              text: this.todo,
+              active: this.todos[this.selectedIndex].active,
+            });
+
+            this.isEditing = false;
+            this.todo = "";
+            this.selectedIndex = null;
+          },
+          deleteTodo(index) {
+            this.todos.splice(index, 1);
+          },
+          completeTodo(todo) {
+            todo.active = !todo.active;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

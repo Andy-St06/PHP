@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch API Example</title>
+</head>
+<body>
+  <h1>User Data</h1>
+  <div id="user-data"></div>
+
+  <script>
+    // Function to fetch user data
+    const fetchUserData = () => {
+      fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(users => {
+          const userDataDiv = document.getElementById('user-data');
+          userDataDiv.innerHTML = users.map(user => `
+            <div>
+              <h2>${user.name}</h2>
+              <p>Email: ${user.email}</p>
+              <p>Address: ${user.address.street}, ${user.address.city}</p>
+            </div>
+          `).join('');
+        })
+        .catch(error => console.error('Fetch error:', error));
+    };
+
+    // Call the function to fetch data
+    fetchUserData();
+  </script>
+</body>
+</html>
